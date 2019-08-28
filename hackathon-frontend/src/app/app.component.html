@@ -1,0 +1,113 @@
+<clr-main-container>
+  <div class="progress demo" *ngIf="loading">
+    <div class="progress loop"><progress></progress></div>
+  </div>
+  <clr-header class="header-4">
+    <div class="branding">
+      <a class="nav-link">
+        <div class="title">Hackathon 2019</div>
+      </a>
+    </div>
+    <div class="header-actions">
+
+      <button class="btn btn-primary" (click)="submitTweet=false;fetchTweet=true;tweet=null;opened1=true;">Upload Data</button>
+      <button class="btn btn-primary" (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
+      <button class="btn btn-primary" (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button>
+    </div>
+  </clr-header>
+  <div class="content-container">
+    <main class="content-area">
+      <app-tweets></app-tweets>
+      <!-- <table class="table" *ngIf="csvData">
+        <thead>
+          <tr>
+            <th *ngFor="let header of csvData[0]">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let body of csvData">
+            <td *ngFor="let item of body">{{item}}</td>
+          </tr>
+
+        </tbody>
+      </table> -->
+
+
+      <div class="clr-row clr-col-12" *ngIf="submitTweet">
+        <div class="clr-col-12">
+          <div class="card">
+            <div class="card-header">
+              Submit Tweet
+            </div>
+            <div class="card-block">
+              <div class="card-text">
+                <textarea class="clr-col-12" [(ngModel)]="tweet" #ctrl="ngModel" required></textarea>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm" [disabled]="!tweet" (click)="addTweet(tweet)">Submit Tweet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clr-row clr-col-12" *ngIf="fetchTweet">
+        <div class=" clr-col-12">
+          <div class="card">
+            <div class="card-header">
+              Tweets
+            </div>
+            <div class="card-block">
+              <div class="card-text">
+                <table class="table" *ngIf="tweetData">
+                  <thead>
+                    <tr>
+                      <th>TweetID</th>
+                      <th>Text</th>
+                      <th>Sentiment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let body of tweetData">
+                      <td>{{body.tweetId}}</td>
+                      <td>{{body.tweetText}}</td>
+                      <td> <button class="btn btn-sm" (click)="setValue(body.tweetText);selectedText=body.tweetText">Get
+                          Sentiment</button></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</clr-main-container>
+
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true">
+  <h3 class="modal-title">{{selectedText}}</h3>
+  <div class="modal-body">
+    <p>{{result}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="opened = false">
+      Close
+    </button>
+  </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="opened1" [clrModalClosable]="true">
+  <h3 class="modal-title">Upload File</h3>
+  <div class="modal-body">
+    <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)"
+      [(ngModel)]="csvModel" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="!csvFile" class="btn btn-primary" (click)="uploadFileOnServer()">
+      UPload
+    </button>
+  </div>
+</clr-modal>
