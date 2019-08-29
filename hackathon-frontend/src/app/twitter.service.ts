@@ -42,4 +42,9 @@ export class TwitterService {
     return this.http.get<TwitterResponse>(this.API_URL + 'trainData', { observe: 'response' });
   }
 
+  addTweet(data): any {
+    return this.http.post<TwitterResponse>('https://react-my-burger-9833c.firebaseio.com//tweets.json', data, { observe: 'response' });
+
+  }
+
 }

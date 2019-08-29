@@ -9,7 +9,6 @@ const trainModel = require('./controllers/trainModel')
 const uploadFile = require('./controllers/uploadFile')
 const charts = require('./controllers/charts')
 
-
 app.use(require('cors')());
 app.use(require('body-parser').json());
 
@@ -18,6 +17,12 @@ app.post('/api/getSentiment', tweetAnalysis.getAnalysis);
 app.get('/api/trainData', trainModel.trainModel)
 
 app.get('/api/chart1', charts.chart1);
+
+app.get('/api/chart2', charts.chart2);
+
+// app.get('/api/chart3', charts.chart3);
+
+// app.get('/api/chart4', charts.chart4);
 
 var multipartUpload = multer({
   storage: multer.diskStorage({

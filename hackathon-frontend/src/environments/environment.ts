@@ -5,7 +5,16 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:3000/api'
+  api: 'http://localhost:3000/api',
+  firebaseConfig: {
+    apiKey: "AIzaSyA2GdeRkGbLaWsfTzbqeuAca0FIe34LbHE",
+    authDomain: "react-my-burger-9833c.firebaseapp.com",
+    databaseURL: "https://react-my-burger-9833c.firebaseio.com",
+    projectId: "react-my-burger-9833c",
+    storageBucket: "react-my-burger-9833c.appspot.com",
+    messagingSenderId: "232157515666",
+    appId: "1:232157515666:web:6edf52fe5165d450"
+  }
 };
 
 /*

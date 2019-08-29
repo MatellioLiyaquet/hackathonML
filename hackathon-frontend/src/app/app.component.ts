@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TwitterService } from './twitter.service';
 import { Tweet } from './tweet';
 import { SnotifyService } from 'ng-snotify';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-root',
@@ -27,12 +28,17 @@ export class AppComponent implements OnInit {
   isDataAvailable: any;
   modelTrained: any;
   modelTrainedReason: any;
+  items: any;
 
 
-  constructor(private twitter: TwitterService, private snotifyService: SnotifyService) {
+  constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
     this.tweetData = [];
     this.opened = false;
     this.incrementIndex = 1;
+    db.list('tweets').valueChanges().subscribe(resp => {
+      this.tweetData = resp;
+      console.log(this.tweetData)
+    });
   }
 
   ngOnInit() {
@@ -46,8 +52,8 @@ export class AppComponent implements OnInit {
       if (resp.body) {
         this.loading = false;
         this.isDataAvailable = resp.body.isAvailable;
-        if(this.isDataAvailable){
-        }else{
+        if (this.isDataAvailable) {
+        } else {
           this.snotifyService.error("File Not Available");
         }
       }
@@ -109,13 +115,15 @@ export class AppComponent implements OnInit {
   }
 
   addTweet(tweet) {
-    this.tweetData.push({
+    const req = {
       tweetId: this.incrementIndex++,
       tweetText: tweet,
       tweetSentiment: ''
-    });
+    };
     this.tweet = null;
-    this.snotifyService.info('Tweet Added Successfully');
+    this.twitter.addTweet(req).subscribe(resp => {
+      this.snotifyService.info('Tweet Added Successfully');
+    })
   }
 
   trainModel() {

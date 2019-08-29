@@ -9,4 +9,16 @@ var chart1 = function (req, res, next) {
         res.send(base64str);
     });
 }
-module.exports = { chart1 };
+
+
+var chart2 = function (req, res, next) {
+    var spawn = require("child_process").spawn;
+    var process = spawn('python', ["./plot2.py"]);
+    process.stdout.on('data', function (data) {
+        var bitmap = fs.readFileSync('./tmp/plots/plot2.png');
+        var base64str = new Buffer(bitmap).toString('base64');
+        res.send(base64str);
+    });
+}
+
+module.exports = { chart1, chart2 };

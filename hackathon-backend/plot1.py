@@ -1,22 +1,24 @@
-import matplotlib
-import matplotlib.pyplot as plt
+import pandas
 import numpy as np
 import base64 as base64
 
-y = [2,4,6,8,10,12,14,16,18,20]
-x = np.arange(10)
-fig = plt.figure()
-ax = plt.subplot(111)
-ax.plot(x, y, label='$y = numbers')
-plt.title('Legend inside')
-ax.legend()
+Tweet= pandas.read_csv("tmp/csv/Tweets.csv")
+
+Mood_count=Tweet['sentiments'].value_counts()
+Index = [1,2,3]
+plt.bar(Index,Mood_count)
+plt.xticks(Index,['negative','neutral','positive'],rotation=45)
+plt.ylabel('Mood Count')
+plt.xlabel('Mood')
+plt.title('Count of Moods')
+plt.figure(1,figsize=(12, 12))
 plt.show()
 
-from io import BytesIO
-figfile = BytesIO()
-plt.savefig('tmp/plots/plot1.png')
-figfile.seek(0)  # rewind to beginning of file
-import base64
-# figdata_png = base64.b64encode(figfile.read())
-figdata_png = base64.b64encode(figfile.getvalue())
-print(figdata_png)
+# from io import BytesIO
+# figfile = BytesIO()
+# plt.savefig('tmp/plots/plot1.png')
+# figfile.seek(0)  # rewind to beginning of file
+# import base64
+# # figdata_png = base64.b64encode(figfile.read())
+# figdata_png = base64.b64encode(figfile.getvalue())
+# print(figdata_png)

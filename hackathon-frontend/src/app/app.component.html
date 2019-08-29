@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div class="clr-row clr-col-12">
+      <div class="clr-row clr-col-12" *ngIf="!fetchTweet && !submitTweet">
         <div class=" clr-col-12">
           <div class="card">
             <div class="card-header">
@@ -111,12 +111,17 @@
             </div>
 
             <div class="card-footer text-center">
-              <button class="btn btn-sm" (click)="trainModel()"  *ngIf="isDataAvailable">Train Model</button>
-              <button class="btn btn-sm" (click)="trainModel()"  *ngIf="isDataAvailable">Data Visualization</button>
+              <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
+              <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Data Visualization</button>
               <button class="btn btn-sm" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>
 
+        <ul>
+          <li class="text" *ngFor="let item of items">
+            {{item}}
+          </li>
+        </ul>
 
 
           </div>
@@ -128,9 +133,11 @@
 </clr-main-container>
 
 <clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true">
-  <h3 class="modal-title">{{selectedText}}</h3>
-  <div class="modal-body">
-    <p>{{result}}</p>
+  <h3 class="modal-title text-center">{{selectedText}}</h3>
+  <div class="modal-body text-center">
+    <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===5" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===1" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" />
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="opened = false">
@@ -140,8 +147,8 @@
 </clr-modal>
 
 <clr-modal [(clrModalOpen)]="opened1" [clrModalClosable]="true">
-  <h3 class="modal-title">Upload File</h3>
-  <div class="modal-body">
+  <h3 class="modal-title text-center">Upload File</h3>
+  <div class="modal-body text-center">
     <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)"
       [(ngModel)]="csvModel" />
   </div>
@@ -153,3 +160,4 @@
 </clr-modal>
 
 <ng-snotify></ng-snotify>
+

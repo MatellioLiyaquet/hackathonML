@@ -10,7 +10,13 @@ import { TweetComponent } from './tweet/tweet.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import { TweetPipe } from './tweet.pipe';
 import { FormsModule } from '@angular/forms';
-import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify'
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
+import { environment } from 'src/environments/environment.prod';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+export const firebaseConfig = environment.firebaseConfig;
+
 
 @NgModule({
   declarations: [
@@ -26,7 +32,9 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify'
     ClarityModule,
     MomentModule,
     FormsModule,
-    SnotifyModule
+    SnotifyModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [{ provide: 'SnotifyToastConfig', useValue: ToastDefaults },
     SnotifyService],
