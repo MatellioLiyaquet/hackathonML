@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TwitterService } from './twitter.service';
 import { Tweet } from './tweet';
+import { SnotifyService } from 'ng-snotify';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,12 @@ export class AppComponent implements OnInit {
   selectedText: string;
   opened1: boolean;
   incrementIndex: number;
+  isDataAvailable: any;
+  modelTrained: any;
+  modelTrainedReason: any;
 
 
-  constructor(private twitter: TwitterService) {
+  constructor(private twitter: TwitterService, private snotifyService: SnotifyService) {
     this.tweetData = [];
     this.opened = false;
     this.incrementIndex = 1;
@@ -33,6 +37,21 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.twitter.user().subscribe(user => this.user = user.data);
+    this.getFileData();
+  }
+
+  getFileData() {
+    this.loading = true;
+    this.twitter.isDataAvailable().subscribe(resp => {
+      if (resp.body) {
+        this.loading = false;
+        this.isDataAvailable = resp.body.isAvailable;
+        if(this.isDataAvailable){
+        }else{
+          this.snotifyService.error("File Not Available");
+        }
+      }
+    })
   }
 
   setValue(tweet) {
@@ -43,10 +62,16 @@ export class AppComponent implements OnInit {
 
     this.twitter.getTweetSentiment(req).subscribe(resp => {
       console.log(resp);
-      this.result = resp;
+      if (resp.body) {
+        this.result = resp.body[0];
+      } else {
+        this.result = "Cannot Analayze"
+      }
+
       this.loading = false;
       this.opened = true;
     }, err => {
+      console.log(err);
       this.result = err.error.text;
       this.loading = false;
       this.opened = true;
@@ -58,7 +83,7 @@ export class AppComponent implements OnInit {
       this.csvFile = file[0];
     } else {
       this.csvFile = null;
-      alert('Please Upload CSV');
+      this.snotifyService.error('Please Upload CSV');
       return;
     }
   }
@@ -72,12 +97,13 @@ export class AppComponent implements OnInit {
         // this.csvData = resp.body.data;
         this.csvModel = null;
         this.opened1 = false;
-        alert('Uploaded Successfully');
+        this.snotifyService.success('Uploaded Successfully');
+        this.getFileData();
       } else {
-        console.log(resp.body.err);
-        alert(resp.body.err);
+        this.snotifyService.error(resp.body.error);
         this.csvModel = null;
         this.opened1 = false;
+        this.getFileData();
       }
     });
   }
@@ -89,7 +115,19 @@ export class AppComponent implements OnInit {
       tweetSentiment: ''
     });
     this.tweet = null;
-    alert('Tweet Added Successfully');
+    this.snotifyService.info('Tweet Added Successfully');
+  }
+
+  trainModel() {
+    this.loading = true;
+    this.twitter.trainModel().subscribe(resp => {
+      if (resp.body) {
+        this.modelTrained = resp.body.trained;
+        this.modelTrainedReason = resp.body.reason;
+        this.loading = false;
+        this.snotifyService.success('Training Done');
+      }
+    })
   }
 
 }

@@ -11,7 +11,7 @@ export interface TwitterResponse {
 @Injectable()
 export class TwitterService {
 
-  private API_URL = 'http://192.168.200.110:3000/api/';
+  private API_URL = 'http://localhost:3001/api/';
   constructor(private http: HttpClient) { }
 
   user() {
@@ -27,10 +27,19 @@ export class TwitterService {
   }
 
   getTweetSentiment(tweet) {
-    return this.http.post(this.API_URL + 'name', tweet, { observe: 'response' });
+    return this.http.post(this.API_URL + 'getSentiment', tweet, { observe: 'response' });
   }
 
-  uploadCsv(data){
+  uploadCsv(data) {
     return this.http.post(this.API_URL + 'upload-csv', data, { observe: 'response' });
   }
+
+  isDataAvailable(): any {
+    return this.http.get<TwitterResponse>(this.API_URL + 'isTrainingDataAvailable', { observe: 'response' });
+  }
+
+  trainModel(): any {
+    return this.http.get<TwitterResponse>(this.API_URL + 'trainData', { observe: 'response' });
+  }
+
 }

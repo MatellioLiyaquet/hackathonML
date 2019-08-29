@@ -10,6 +10,7 @@ import { TweetComponent } from './tweet/tweet.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import { TweetPipe } from './tweet.pipe';
 import { FormsModule } from '@angular/forms';
+import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify'
 
 @NgModule({
   declarations: [
@@ -24,9 +25,11 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ClarityModule,
     MomentModule,
-    FormsModule
+    FormsModule,
+    SnotifyModule
   ],
-  providers: [],
+  providers: [{ provide: 'SnotifyToastConfig', useValue: ToastDefaults },
+    SnotifyService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -10,9 +10,10 @@
     </div>
     <div class="header-actions">
 
-      <button class="btn btn-primary" (click)="submitTweet=false;fetchTweet=true;tweet=null;opened1=true;">Upload Data</button>
-      <button class="btn btn-primary" (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
-      <button class="btn btn-primary" (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button>
+      <button class="btn btn-primary" *ngIf="isDataAvailable"
+        (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
+      <button class="btn btn-primary" *ngIf="isDataAvailable"
+        (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button>
     </div>
   </clr-header>
   <div class="content-container">
@@ -83,6 +84,45 @@
           </div>
         </div>
       </div>
+
+      <div class="clr-row clr-col-12">
+        <div class=" clr-col-12">
+          <div class="card">
+            <div class="card-header">
+              Data Information
+            </div>
+            <div class="card-block text-center" *ngIf="isDataAvailable">
+              <div class="card-text">
+                Name: Tweets.csv
+              </div>
+              <div class="card-text">
+                Type: CSV
+              </div>
+              <div class="card-text">
+                Name: {{isDataAvailable}}
+              </div>
+            </div>
+
+            <div class="card-block text-center" *ngIf="!isDataAvailable">
+              <div class="card-text">
+                No File Found
+              </div>
+
+            </div>
+
+            <div class="card-footer text-center">
+              <button class="btn btn-sm" (click)="trainModel()"  *ngIf="isDataAvailable">Train Model</button>
+              <button class="btn btn-sm" (click)="trainModel()"  *ngIf="isDataAvailable">Data Visualization</button>
+              <button class="btn btn-sm" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
+                New Data</button>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 </clr-main-container>
@@ -111,3 +151,5 @@
     </button>
   </div>
 </clr-modal>
+
+<ng-snotify></ng-snotify>
