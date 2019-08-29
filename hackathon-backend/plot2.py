@@ -2,6 +2,7 @@ import pandas
 import numpy as np
 import base64 as base64
 from wordcloud import WordCloud,STOPWORDS
+import matplotlib.pyplot as plt
 
 Tweet= pandas.read_csv("tmp/csv/Tweets.csv")
 df=Tweet[Tweet['sentiments']=='1']
@@ -26,11 +27,9 @@ plt.imshow(wordcloud)
 plt.axis('off')
 plt.show()
 
-# from io import BytesIO
-# figfile = BytesIO()
-# plt.savefig('tmp/plots/plot2.png')
-# figfile.seek(0)  # rewind to beginning of file
-# import base64
-# # figdata_png = base64.b64encode(figfile.read())
-# figdata_png = base64.b64encode(figfile.getvalue())
-# print(figdata_png)
+from io import BytesIO
+figfile = BytesIO()
+plt.savefig(figfile, format='png')
+figfile.seek(0)
+my_base64_jpgData = base64.b64encode(figfile.read())
+print(my_base64_jpgData)

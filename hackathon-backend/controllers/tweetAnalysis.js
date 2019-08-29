@@ -3,7 +3,6 @@ const fs = require('fs');
 var getAnalysis = function (req, res) {
     if (fs.existsSync('trainingPickle')) {
         var spawn = require("child_process").spawn;
-        console.log(req.body.tweet)
         var process = spawn('python', ["./hackathon.py",
             req.body.tweet]);
         process.stdout.on('data', function (data) {
