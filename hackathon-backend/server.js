@@ -36,4 +36,4 @@ app.post('/api/upload-csv', multipartUpload, uploadFile.upload)
 app.get('/api/isTrainingDataAvailable', trainModel.trainingAvailable)
 
 
-app.listen(3005, () => console.log('Server running'));
+app.listen(3001, () => console.log('Server running'));

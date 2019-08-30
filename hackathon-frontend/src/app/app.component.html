@@ -9,7 +9,8 @@
       </a>
     </div>
     <div class="header-actions">
-
+      <button class="btn btn-primary" *ngIf="isDataAvailable"
+        (click)="submitTweet=false;fetchTweet=false;tweet=null;">Data Information</button>
       <button class="btn btn-primary" *ngIf="isDataAvailable"
         (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
       <button class="btn btn-primary" *ngIf="isDataAvailable"
@@ -18,20 +19,7 @@
   </clr-header>
   <div class="content-container">
     <main class="content-area">
-      <app-tweets></app-tweets>
-      <!-- <table class="table" *ngIf="csvData">
-        <thead>
-          <tr>
-            <th *ngFor="let header of csvData[0]">{{header}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let body of csvData">
-            <td *ngFor="let item of body">{{item}}</td>
-          </tr>
 
-        </tbody>
-      </table> -->
 
 
       <div class="clr-row clr-col-12" *ngIf="submitTweet">
@@ -63,14 +51,12 @@
                 <table class="table" *ngIf="tweetData">
                   <thead>
                     <tr>
-                      <th>TweetID</th>
-                      <th>Text</th>
-                      <th>Sentiment</th>
+                      <th>Tweets</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let body of tweetData">
-                      <td>{{body.tweetId}}</td>
                       <td>{{body.tweetText}}</td>
                       <td> <button class="btn btn-sm" (click)="setValue(body.tweetText);selectedText=body.tweetText">Get
                           Sentiment</button></td>
@@ -91,38 +77,42 @@
             <div class="card-header">
               Data Information
             </div>
-            <div class="card-block text-center" *ngIf="isDataAvailable">
-              <div class="card-text">
-                Name: Tweets.csv
-              </div>
-              <div class="card-text">
-                Type: CSV
-              </div>
-              <div class="card-text">
-                Name: {{isDataAvailable}}
-              </div>
-            </div>
 
+            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0" style="height: 400px;overflow-y: auto">
+              <table class="table" *ngIf="gridData">
+                <thead>
+                  <tr>
+                    <th>Emotions</th>
+                    <th>Sentiments</th>
+                    <th>Tweets</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let body of gridData">
+                    <td>
+                     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="body.sentiment==='5'" style="height: 40px;width: 40px" />
+                    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='3'" style="height: 40px;width: 40px" />
+                    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" />
+                   </td>
+                   <td>{{body.sentimentText}}</td>
+                    <td>{{body.tweet}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0">
+              <img src="{{chart1}}" class="clr-col-6"/>
+              <img src="{{chart2}}" class="clr-col-6"/>
+            </div>
             <div class="card-block text-center" *ngIf="!isDataAvailable">
-              <div class="card-text">
-                No File Found
-              </div>
-
+              <p>No Data Found</p>
             </div>
-
             <div class="card-footer text-center">
               <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
-              <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Data Visualization</button>
               <button class="btn btn-sm" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>
-
-        <ul>
-          <li class="text" *ngFor="let item of items">
-            {{item}}
-          </li>
-        </ul>
-
 
           </div>
         </div>
@@ -136,8 +126,8 @@
   <h3 class="modal-title text-center">{{selectedText}}</h3>
   <div class="modal-body text-center">
     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===5" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===1" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===3" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===1" style="height: 200px;width: 200px" />
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="opened = false">
@@ -160,4 +150,3 @@
 </clr-modal>
 
 <ng-snotify></ng-snotify>
-

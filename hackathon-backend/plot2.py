@@ -5,7 +5,7 @@ from wordcloud import WordCloud,STOPWORDS
 import matplotlib.pyplot as plt
 
 Tweet= pandas.read_csv("tmp/csv/Tweets.csv")
-df=Tweet[Tweet['sentiments']=='1']
+df=Tweet[Tweet['sentiments']==1]
 words = ' '.join(df['tweets'])
 
 cleaned_word = " ".join([word for word in words.split()
@@ -25,7 +25,7 @@ wordcloud = WordCloud(stopwords=STOPWORDS,
 plt.figure(1,figsize=(12, 12))
 plt.imshow(wordcloud)
 plt.axis('off')
-plt.show()
+# plt.show()
 
 from io import BytesIO
 figfile = BytesIO()

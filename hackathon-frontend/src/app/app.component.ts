@@ -3,6 +3,7 @@ import { TwitterService } from './twitter.service';
 import { Tweet } from './tweet';
 import { SnotifyService } from 'ng-snotify';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -29,12 +30,16 @@ export class AppComponent implements OnInit {
   modelTrained: any;
   modelTrainedReason: any;
   items: any;
+  chart1: any;
+  chart2: any;
+  gridData: Array<any>;
 
 
   constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
     this.tweetData = [];
     this.opened = false;
     this.incrementIndex = 1;
+    this.gridData = [];
     db.list('tweets').valueChanges().subscribe(resp => {
       this.tweetData = resp;
       console.log(this.tweetData)
@@ -42,7 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.twitter.user().subscribe(user => this.user = user.data);
+    // this.twitter.user().subscribe(user => this.user = user.data);
     this.getFileData();
   }
 
@@ -50,9 +55,43 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.twitter.isDataAvailable().subscribe(resp => {
       if (resp.body) {
-        this.loading = false;
+        
         this.isDataAvailable = resp.body.isAvailable;
         if (this.isDataAvailable) {
+          resp.body.data.forEach((element, index) => {
+            if (index !== 0) {
+              let sentiment = '';
+              switch (element[0]) {
+                case '5':
+                  sentiment = 'POSITIVE'
+                  break;
+                case '1':
+                  sentiment = 'NUETRAL'
+                  break;
+                case '3':
+                  sentiment = 'NEGETIVE'
+                  break;
+              }
+              this.gridData.push({
+                sentiment: element[0],
+                tweet: element[1],
+                sentimentText:sentiment
+              })
+            }
+          });
+          const bs1 = this.twitter.chart1();
+          const bs2 = this.twitter.chart2();
+          forkJoin(bs1).subscribe((resp: any) => {
+            this.chart1 = 'data:image/jpeg;base64,'+ resp[0].body.data;
+          });
+
+          forkJoin(bs2).subscribe((resp: any) => {
+            this.chart2 = 'data:image/jpeg;base64,'+ resp[0].body.data;
+            this.loading = false;
+          });
+          console.log(this.gridData);
+
+
         } else {
           this.snotifyService.error("File Not Available");
         }

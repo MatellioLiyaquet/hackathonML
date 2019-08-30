@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const csv = require('fast-csv');
 var trainModel = function (req, res, next) {
     try {
         if (fs.existsSync('./tmp/csv/Tweets.csv')) {
@@ -28,15 +28,35 @@ var trainingAvailable = function (req, res, next) {
     try {
         console.log("test")
         if (fs.existsSync('./tmp/csv/Tweets.csv')) {
+            const stat = fs.statSync('./tmp/csv/Tweets.csv');
+            const response = {
+                'Content-Type': 'audio/csv',
+                'Content-Length': stat.size,
+                'name': 'Tweet.csv'
+            }
+            const fileRows = [];
+            csv.fromPath('./tmp/csv/Tweets.csv')
+                .on("data", function (data) {
+                    fileRows.push(data);
+                })
+                .on("end", function () {
+
+                    return res.json({
+                        isAvailable: true,
+                        stat: response,
+                        data: fileRows
+                    });
+                })
+
+
+        } else {
             return res.json({
-                isAvailable: true
-            });
-        }else{
-            return res.json({
-                isAvailable: false
+                isAvailable: false,
+                stat: null
             });
         }
-    } catch (error) {a
+    } catch (error) {
+        console.log(error)
         return res.json({
             isAvailable: false
         });
