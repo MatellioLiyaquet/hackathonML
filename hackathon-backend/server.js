@@ -20,6 +20,8 @@ app.get('/api/chart1', charts.chart1);
 
 app.get('/api/chart2', charts.chart2);
 
+app.get('/api/chart3', charts.chart3);
+
 // app.get('/api/chart3', charts.chart3);
 
 // app.get('/api/chart4', charts.chart4);

@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   items: any;
   chart1: any;
   chart2: any;
+  chart3: any;
   gridData: Array<any>;
 
 
@@ -170,6 +171,7 @@ export class AppComponent implements OnInit {
   visualize() {
     const bs1 = this.twitter.chart1();
     const bs2 = this.twitter.chart2();
+    const bs3 = this.twitter.chart3();
     this.loading = true;
     forkJoin(bs1).subscribe((resp: any) => {
       this.chart1 = 'data:image/jpeg;base64,' + resp[0].body.data;
@@ -177,6 +179,10 @@ export class AppComponent implements OnInit {
     });
     forkJoin(bs2).subscribe((resp: any) => {
       this.chart2 = 'data:image/jpeg;base64,' + resp[0].body.data;
+      this.loading = false;
+    });
+    forkJoin(bs3).subscribe((resp: any) => {
+      this.chart3 = 'data:image/jpeg;base64,' + resp[0].body.data;
       this.loading = false;
     });
   }

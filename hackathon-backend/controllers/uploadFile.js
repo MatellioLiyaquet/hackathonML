@@ -20,6 +20,7 @@ var upload = function (req, res, next) {
             var spawn = require("child_process").spawn;
             spawn('python', ["plot1.py"]);
             spawn('python', ["plot2.py"]);
+            spawn('python', ["plot3.py"]);
             setTimeout(() => {
                 return res.json({ data: fileRows })
             }, 5000);
