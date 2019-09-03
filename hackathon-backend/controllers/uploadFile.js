@@ -25,7 +25,7 @@ function validateCsvData(rows, path) {
     console.log(rows[0])
     if (rows[0].indexOf('tweets') === -1 || rows[0].indexOf('sentiments') === -1) {
         fs.unlinkSync(path);
-        return 'Invalid CSV'
+        return 'Invalid CSV, File must have Tweets and Sentiments column in it'
     }
     return;
 }
