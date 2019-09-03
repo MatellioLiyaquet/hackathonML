@@ -1,8 +1,6 @@
 const express = require('express');
-const Twitter = require('twit');
 const multer = require('multer');
 
-const fs = require('fs');
 const app = express();
 const tweetAnalysis = require('./controllers/tweetAnalysis')
 const trainModel = require('./controllers/trainModel')
@@ -21,10 +19,6 @@ app.get('/api/chart1', charts.chart1);
 app.get('/api/chart2', charts.chart2);
 
 app.get('/api/chart3', charts.chart3);
-
-// app.get('/api/chart3', charts.chart3);
-
-// app.get('/api/chart4', charts.chart4);
 
 var multipartUpload = multer({
   storage: multer.diskStorage({

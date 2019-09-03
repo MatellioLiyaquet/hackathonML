@@ -4,7 +4,7 @@ var trainModel = function (req, res, next) {
     try {
         if (fs.existsSync('./tmp/csv/Tweets.csv')) {
             var spawn = require("child_process").spawn;
-            var process = spawn('python', ["./train.py"]);
+            spawn('python', ["./train.py"]);
             setTimeout(() => {
                 return res.send({
                     trained: true,
