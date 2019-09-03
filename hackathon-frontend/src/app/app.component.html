@@ -126,8 +126,8 @@
   <h3 class="modal-title text-center">{{selectedText}}</h3>
   <div class="modal-body text-center">
     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===5" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===3" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===1" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===1" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" />
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="opened = false">
@@ -139,7 +139,7 @@
 <clr-modal [(clrModalOpen)]="opened1" [clrModalClosable]="true">
   <h3 class="modal-title text-center">Upload File</h3>
   <div class="modal-body text-center">
-    <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)"
+    <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)" class="clr-form-control"
       [(ngModel)]="csvModel" />
   </div>
   <div class="modal-footer">

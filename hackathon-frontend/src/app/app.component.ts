@@ -83,17 +83,19 @@ export class AppComponent implements OnInit {
           const bs2 = this.twitter.chart2();
           forkJoin(bs1).subscribe((resp: any) => {
             this.chart1 = 'data:image/jpeg;base64,'+ resp[0].body.data;
-          });
-
-          forkJoin(bs2).subscribe((resp: any) => {
-            this.chart2 = 'data:image/jpeg;base64,'+ resp[0].body.data;
             this.loading = false;
           });
+
+          // forkJoin(bs2).subscribe((resp: any) => {
+          //   this.chart2 = 'data:image/jpeg;base64,'+ resp[0].body.data;
+          //   this.loading = false;
+          // });
           console.log(this.gridData);
 
 
         } else {
-          this.snotifyService.error("File Not Available");
+          this.snotifyService.info("Ready to Upload Data, Please Upload a Valid CSV");
+          this.loading = false;
         }
       }
     })
@@ -148,7 +150,6 @@ export class AppComponent implements OnInit {
         this.snotifyService.error(resp.body.error);
         this.csvModel = null;
         this.opened1 = false;
-        this.getFileData();
       }
     });
   }
