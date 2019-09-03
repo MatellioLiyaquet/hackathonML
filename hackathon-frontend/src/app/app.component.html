@@ -33,7 +33,7 @@
                 <textarea class="clr-col-12" [(ngModel)]="tweet" #ctrl="ngModel" required></textarea>
               </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer text-center">
               <button class="btn btn-sm" [disabled]="!tweet" (click)="addTweet(tweet)">Submit Tweet</button>
             </div>
           </div>
@@ -61,9 +61,11 @@
                       <td> <button class="btn btn-sm" (click)="setValue(body.tweetText);selectedText=body.tweetText">Get
                           Sentiment</button></td>
                     </tr>
-
                   </tbody>
                 </table>
+                <div class="card-block text-center" *ngIf="tweetData.length == 0">
+                  <p>No Data Found</p>
+                </div>
               </div>
             </div>
 
@@ -110,6 +112,7 @@
             </div>
             <div class="card-footer text-center">
               <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
+              <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable">Visualize Data</button>
               <button class="btn btn-sm" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>

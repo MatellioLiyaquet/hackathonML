@@ -15,9 +15,9 @@ cleaned_word = " ".join([word for word in words.split()
                             ])
 
 wordcloud = WordCloud(stopwords=STOPWORDS,
-                      background_color='black',
-                      width=3000,
-                      height=2500
+                      background_color='white',
+                      width=1000,
+                      height=1000
                      ).generate(cleaned_word)
 
 
@@ -29,7 +29,7 @@ plt.axis('off')
 
 from io import BytesIO
 figfile = BytesIO()
-plt.savefig(figfile, format='png')
+plt.savefig('tmp/plots/plot2.jpg', format='png')
 figfile.seek(0)
 my_base64_jpgData = base64.b64encode(figfile.read())
 print(my_base64_jpgData)

@@ -5,10 +5,13 @@ var trainModel = function (req, res, next) {
         if (fs.existsSync('./tmp/csv/Tweets.csv')) {
             var spawn = require("child_process").spawn;
             var process = spawn('python', ["./train.py"]);
-            return res.send({
-                trained: true,
-                reason: "Trainig Done SuccessFully, Now You can predict tweet sentiments"
-            });
+            setTimeout(() => {
+                return res.send({
+                    trained: true,
+                    reason: "Trainig Done SuccessFully, Now You can predict tweet sentiments"
+                });
+            }, 5000);
+            
         } else {
             return res.send({
                 trained: false,
@@ -47,7 +50,6 @@ var trainingAvailable = function (req, res, next) {
                         data: fileRows
                     });
                 })
-
 
         } else {
             return res.json({

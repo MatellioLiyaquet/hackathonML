@@ -16,7 +16,7 @@ plt.figure(1,figsize=(100, 20))
 
 from io import BytesIO
 figfile = BytesIO()
-plt.savefig(figfile, format='png')
+plt.savefig('tmp/plots/plot1.jpg', format='png')
 figfile.seek(0)
 my_base64_jpgData = base64.b64encode(figfile.read())
 print(my_base64_jpgData)

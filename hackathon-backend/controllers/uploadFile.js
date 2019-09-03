@@ -4,8 +4,8 @@ const csv = require('fast-csv');
 var upload = function (req, res, next) {
     const fileRows = [];
     const temp = [];
-
-    csv.fromPath(req.file.path)
+    try {
+        csv.fromPath(req.file.path)
         .on("data", function (data) {
             if (temp.length === 0) {
                 temp.push(data)
@@ -17,8 +17,17 @@ var upload = function (req, res, next) {
             if (validationError) {
                 return res.send({ error: validationError });
             }
-            return res.json({ data: fileRows })
+            var spawn = require("child_process").spawn;
+            spawn('python', ["plot1.py"]);
+            spawn('python', ["plot2.py"]);
+            setTimeout(() => {
+                return res.json({ data: fileRows })
+            }, 5000);
         })
+    } catch (error) {
+        console.log(error)
+    }
+    
 };
 
 function validateCsvData(rows, path) {

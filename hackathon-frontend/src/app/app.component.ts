@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.twitter.isDataAvailable().subscribe(resp => {
       if (resp.body) {
-        
+
         this.isDataAvailable = resp.body.isAvailable;
         if (this.isDataAvailable) {
           resp.body.data.forEach((element, index) => {
@@ -75,24 +75,11 @@ export class AppComponent implements OnInit {
               this.gridData.push({
                 sentiment: element[0],
                 tweet: element[1],
-                sentimentText:sentiment
+                sentimentText: sentiment
               })
             }
           });
-          const bs1 = this.twitter.chart1();
-          const bs2 = this.twitter.chart2();
-          forkJoin(bs1).subscribe((resp: any) => {
-            this.chart1 = 'data:image/jpeg;base64,'+ resp[0].body.data;
-            this.loading = false;
-          });
-
-          // forkJoin(bs2).subscribe((resp: any) => {
-          //   this.chart2 = 'data:image/jpeg;base64,'+ resp[0].body.data;
-          //   this.loading = false;
-          // });
-          console.log(this.gridData);
-
-
+          this.loading = false;
         } else {
           this.snotifyService.info("Ready to Upload Data, Please Upload a Valid CSV");
           this.loading = false;
@@ -137,11 +124,12 @@ export class AppComponent implements OnInit {
 
 
   uploadFileOnServer() {
+    this.loading = true;
     const formData = new FormData();
     formData.append('file', this.csvFile)
+    this.opened1 = false;
     this.twitter.uploadCsv(formData).subscribe((resp: any) => {
       if (resp.body.data) {
-        // this.csvData = resp.body.data;
         this.csvModel = null;
         this.opened1 = false;
         this.snotifyService.success('Uploaded Successfully');
@@ -151,6 +139,7 @@ export class AppComponent implements OnInit {
         this.csvModel = null;
         this.opened1 = false;
       }
+      this.loading = false;
     });
   }
 
@@ -176,6 +165,20 @@ export class AppComponent implements OnInit {
         this.snotifyService.success('Training Done');
       }
     })
+  }
+
+  visualize() {
+    const bs1 = this.twitter.chart1();
+    const bs2 = this.twitter.chart2();
+    this.loading = true;
+    forkJoin(bs1).subscribe((resp: any) => {
+      this.chart1 = 'data:image/jpeg;base64,' + resp[0].body.data;
+      this.loading = false;
+    });
+    forkJoin(bs2).subscribe((resp: any) => {
+      this.chart2 = 'data:image/jpeg;base64,' + resp[0].body.data;
+      this.loading = false;
+    });
   }
 
 }
