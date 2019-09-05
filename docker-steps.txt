@@ -1,0 +1,15 @@
+docker run -it --rm --name my-node -v $(pwd):/usr/src/app -w /usr/src/app -p 3001:3001 -p 4200:4200 node:10 bash
+
+npm i -g @angular/cli
+
+cd hackathon-backend/
+
+npm i
+
+npm start
+
+cd hackathon-frontend/
+
+npm i
+
+ng s
