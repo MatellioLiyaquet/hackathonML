@@ -15,9 +15,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json /twitter_sentiments/frontend
 
-RUN npm install
-
 RUN npm install -g @angular/cli --unsafe
+
+RUN npm install
 
 COPY . /twitter_sentiments/frontend
 
