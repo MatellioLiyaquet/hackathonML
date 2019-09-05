@@ -16,7 +16,7 @@ RUN npm install
 
 RUN npm install -g nodemon --unsafe
 
-RUN npm install express
+RUN npm install -g express --unsafe
 
 COPY . /twitter_sentiments/backend
 
