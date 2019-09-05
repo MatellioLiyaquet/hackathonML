@@ -67,10 +67,10 @@ export class AppComponent implements OnInit {
                   sentiment = 'POSITIVE'
                   break;
                 case '1':
-                  sentiment = 'NUETRAL'
+                  sentiment = 'NEUTRAL'
                   break;
                 case '3':
-                  sentiment = 'NEGETIVE'
+                  sentiment = 'NEGATIVE'
                   break;
               }
               this.gridData.push({
