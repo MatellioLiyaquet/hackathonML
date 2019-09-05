@@ -14,7 +14,7 @@ COPY package.json /twitter_sentiments/backend
 
 RUN npm install
 
-RUN sudo npm install -g nodemon --unsafe
+RUN npm install -g nodemon --unsafe
 
 COPY . /twitter_sentiments/backend
 
