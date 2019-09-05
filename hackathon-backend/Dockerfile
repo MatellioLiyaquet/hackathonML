@@ -16,6 +16,8 @@ RUN npm install
 
 RUN npm install -g nodemon --unsafe
 
+RUN npm install expressS
+
 COPY . /twitter_sentiments/backend
 
 EXPOSE 3001
