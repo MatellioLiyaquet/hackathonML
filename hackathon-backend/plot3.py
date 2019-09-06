@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 Mood_count=Tweet['sentiments'].value_counts()
 labels = 'negative','neutral','positive'
 sizes = Mood_count
-explode = (0, 0, 0)
+explode = (0, 0, 0.1)
 
 fig1, ax1 = plt.subplots()
 ax1.pie(sizes, explode=explode, labels=labels, colors=['red', 'yellow', 'green'], autopct='%1.1f%%', shadow=True, startangle=90)
