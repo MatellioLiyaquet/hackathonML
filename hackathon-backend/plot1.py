@@ -6,7 +6,7 @@ Tweet= pandas.read_csv("tmp/csv/Tweets.csv")
 
 Mood_count=Tweet['sentiments'].value_counts()
 Index = [1,2,3]
-plt.bar(Index,Mood_count)
+plt.bar(Index,Mood_count, color=['red', 'yellow', 'green'])
 plt.xticks(Index,['negative','neutral','positive'],rotation=0)
 plt.ylabel('Mood Count')
 plt.xlabel('Mood')

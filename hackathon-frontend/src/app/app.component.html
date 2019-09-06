@@ -13,8 +13,8 @@
         (click)="submitTweet=false;fetchTweet=false;tweet=null;">Data Information</button>
       <button class="btn btn-primary" *ngIf="isDataAvailable"
         (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
-      <button class="btn btn-primary" *ngIf="isDataAvailable"
-        (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button>
+      <!-- <button class="btn btn-primary" *ngIf="isDataAvailable"
+        (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button> -->
     </div>
   </clr-header>
   <div class="content-container">
@@ -115,7 +115,7 @@
             <div class="card-footer text-center">
               <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
               <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable">Visualize Data</button>
-              <button class="btn btn-sm" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
+              <button class="btn btn-sm" *ngIf="!isDataAvailable" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>
 
@@ -127,8 +127,8 @@
   </div>
 </clr-main-container>
 
-<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true">
-  <h3 class="modal-title text-center">{{selectedText}}</h3>
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true" >
+  <h3 class="modal-title text-center" style="overflow: auto;max-height: 500px;">{{selectedText}}</h3>
   <div class="modal-body text-center">
     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===5" style="height: 200px;width: 200px" />
     <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===1" style="height: 200px;width: 200px" />
