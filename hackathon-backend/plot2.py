@@ -4,10 +4,9 @@ import base64 as base64
 from wordcloud import WordCloud,STOPWORDS
 import matplotlib.pyplot as plt
 
-Tweet= pandas.read_csv("tmp/csv/Tweets.csv")
+Tweet= pandas.read_csv("tmp/csv/Tweets.csv", low_memory=False)
 df=Tweet[Tweet['sentiments']==1]
-words = ' '.join(df['tweets'])
-
+words = ','.join(str(v) for v in df['tweets'])
 cleaned_word = " ".join([word for word in words.split()
                             if 'http' not in word
                                 and not word.startswith('@')
@@ -25,11 +24,14 @@ wordcloud = WordCloud(stopwords=STOPWORDS,
 plt.figure(1,figsize=(12, 12))
 plt.imshow(wordcloud)
 plt.axis('off')
-# plt.show()
+#plt.show()
 
 from io import BytesIO
 figfile = BytesIO()
 plt.savefig('tmp/plots/plot2.jpg', format='png')
 figfile.seek(0)
-my_base64_jpgData = base64.b64encode(figfile.read())
-print(my_base64_jpgData)
+try:
+    my_base64_jpgData = base64.b64encode(figfile.read())
+    print(my_base64_jpgData)
+except:
+    print("error occured") 

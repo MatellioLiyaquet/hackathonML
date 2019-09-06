@@ -85,18 +85,16 @@
                 <thead>
                   <tr>
                     <th>Emotions</th>
-                    <th>Sentiments</th>
                     <th>Tweets</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let body of gridData">
                     <td>
-                     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="body.sentiment==='5'" style="height: 40px;width: 40px" />
-                    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='3'" style="height: 40px;width: 40px" />
-                    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" />
+                     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" />
+                    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='0'" style="height: 40px;width: 40px" />
+                    <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" /> -->
                    </td>
-                   <td>{{body.sentimentText}}</td>
                     <td>{{body.tweet}}</td>
                   </tr>
 
@@ -130,9 +128,9 @@
 <clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true" >
   <h3 class="modal-title text-center" style="overflow: auto;max-height: 500px;">{{selectedText}}</h3>
   <div class="modal-body text-center">
-    <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===5" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===1" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===1" style="height: 200px;width: 200px" />
+    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===0" style="height: 200px;width: 200px" />
+    <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" /> -->
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="opened = false">

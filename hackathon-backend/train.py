@@ -55,3 +55,31 @@ db['classifier'] = classifier
 dbfile = open('trainingPickle', 'ab')
 pickle.dump(db, dbfile)                      
 dbfile.close()
+
+
+#!/usr/bin/env python
+# coding: utf-8
+
+
+# e_tok = re.compile(f'([{string.punctuation}«»®´·º½¾¿¡§£₤‘’])')
+# def tokenize(s): return re_tok.sub(r' \1 ', s).split()
+
+# from sklearn.model_selection import train_test_split
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
+
+
+
+# tf_train = vect.fit_transform(X_train.ravel())
+# tf_test = vect.transform(X_test)
+
+# p = tf_train[y_train==1].sum(0) + 1
+# print(p)
+# q = tf_train[y_train==0].sum(0) + 1
+# r = np.log((p/p.sum()) / (q/q.sum()))
+# b = np.log(len(p) / len(q))
+# pre_preds = tf_test * r.T + b
+# print(pre_preds)
+# preds = pre_preds.T > 0
+# accuracy = (preds == y_test).mean()
+# print(accuracy)
+
