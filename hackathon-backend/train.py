@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 import sys
 import numpy as np
 import re
@@ -34,7 +32,7 @@ for i in range(0, len(X)):
 db = {} 
 
 from sklearn.feature_extraction.text import CountVectorizer
-vectorizer = CountVectorizer(max_features = 2000, min_df = 3, max_df = 0.6, stop_words = stopwords.words('english'))
+vectorizer = CountVectorizer(max_features = 2000, min_df = 3, max_df = 0.6, stop_words = stopwords.words('english'),binary=True)
 X = vectorizer.fit_transform(corpus).toarray()
 db['vectorizer'] = vectorizer
 
@@ -46,40 +44,54 @@ X = transformer.fit_transform(X).toarray()
 from sklearn.model_selection import train_test_split
 text_train, text_test, sent_train, sent_test = train_test_split(X, y, test_size = 0.20, random_state = 42)
 
-
 from sklearn.linear_model import LogisticRegression
-classifier = LogisticRegression()
-classifier.fit(text_train,sent_train)
-db['classifier'] = classifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC, LinearSVC, NuSVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.metrics import accuracy_score
+
+
+
+Classifiers = [
+    LogisticRegression(),
+    # KNeighborsClassifier(3),
+    # SVC(kernel="rbf", C=0.025, probability=True),
+    # DecisionTreeClassifier(),
+    # RandomForestClassifier(n_estimators=200),
+    # AdaBoostClassifier(),
+    # GaussianNB()
+ ]
+
+Accuracy=[]
+Model=[]
+for classifier in Classifiers:
+    try:
+        fit = classifier.fit(text_train,sent_train)
+        pred = fit.predict(text_test)
+        # Use score method to get accuracy of model
+        score = classifier.score(text_test, sent_test)
+        # print(score)
+        from sklearn.metrics import classification_report
+        report = classification_report(sent_test,pred)
+        print(report)
+        # output = report.tolist()
+        # x = json.dumps(output)
+        # print(x)
+        db['model'] = fit
+    except Exception:
+        print( " Exception occures")
+    accuracy = accuracy_score(sent_test,pred)*100
+    Accuracy.append(accuracy)
+    Model.append(classifier.__class__.__name__)
+    print('Accuracy of '+classifier.__class__.__name__+'is '+str(accuracy))
 
 dbfile = open('trainingPickle', 'ab')
 pickle.dump(db, dbfile)                      
 dbfile.close()
 
 
-#!/usr/bin/env python
-# coding: utf-8
-
-
-# e_tok = re.compile(f'([{string.punctuation}«»®´·º½¾¿¡§£₤‘’])')
-# def tokenize(s): return re_tok.sub(r' \1 ', s).split()
-
-# from sklearn.model_selection import train_test_split
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
-
-
-
-# tf_train = vect.fit_transform(X_train.ravel())
-# tf_test = vect.transform(X_test)
-
-# p = tf_train[y_train==1].sum(0) + 1
-# print(p)
-# q = tf_train[y_train==0].sum(0) + 1
-# r = np.log((p/p.sum()) / (q/q.sum()))
-# b = np.log(len(p) / len(q))
-# pre_preds = tf_test * r.T + b
-# print(pre_preds)
-# preds = pre_preds.T > 0
-# accuracy = (preds == y_test).mean()
-# print(accuracy)
 

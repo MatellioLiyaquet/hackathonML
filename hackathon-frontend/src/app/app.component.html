@@ -80,7 +80,8 @@
               Data Information
             </div>
 
-            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0" style="height: 400px;overflow-y: auto">
+            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0"
+              style="height: 400px;overflow-y: auto">
               <table class="table" *ngIf="gridData">
                 <thead>
                   <tr>
@@ -91,10 +92,12 @@
                 <tbody>
                   <tr *ngFor="let body of gridData">
                     <td>
-                     <img src="../assets//images/Positive.png" alt="Positive" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" />
-                    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='0'" style="height: 40px;width: 40px" />
-                    <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" /> -->
-                   </td>
+                      <img src="../assets//images/Positive.png" alt="Positive" *ngIf="body.sentiment==='5'"
+                        style="height: 40px;width: 40px" />
+                      <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='1'"
+                        style="height: 40px;width: 40px" />
+                      <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" /> -->
+                    </td>
                     <td>{{body.tweet}}</td>
                   </tr>
 
@@ -102,9 +105,11 @@
               </table>
             </div>
             <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0">
-              <img src="{{chart1}}" class="clr-col-6"/>
-              <img src="{{chart3}}" class="clr-col-6"/>
-              <img src="{{chart2}}" class="clr-col-12"/>
+              <img src="{{chart4}}" class="clr-col-6" />
+              <img src="{{chart5}}" class="clr-col-6" />
+              <img src="{{chart1}}" class="clr-col-6" />
+              <img src="{{chart3}}" class="clr-col-6" />
+              <img src="{{chart2}}" class="clr-col-12" />
 
             </div>
             <div class="card-block text-center" *ngIf="!isDataAvailable">
@@ -113,7 +118,8 @@
             <div class="card-footer text-center">
               <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
               <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable">Visualize Data</button>
-              <button class="btn btn-sm" *ngIf="!isDataAvailable" (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
+              <button class="btn btn-sm" *ngIf="!isDataAvailable"
+                (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>
 
@@ -125,11 +131,18 @@
   </div>
 </clr-main-container>
 
-<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true" >
-  <h3 class="modal-title text-center" style="overflow: auto;max-height: 500px;">{{selectedText}}</h3>
-  <div class="modal-body text-center">
-    <img src="../assets//images/Positive.png" alt="Positive" *ngIf="result===1" style="height: 200px;width: 200px" />
-    <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="result===0" style="height: 200px;width: 200px" />
+<clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="true">
+  <h3 class="modal-title text-center">{{selectedText}}</h3>
+  <div class="modal-body text-center clr-row">
+    <div class="clr-col-6">
+      <img src="../assets//images/Positive.png" *ngIf="result" alt="Positive" style="height: 200px;width: 200px" />
+      <span style="font-weight:bold;margin-top: 20px" *ngIf="result">{{result[1]}}</span>
+    </div>
+    <div class="clr-col-6">
+      <img src="../assets//images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
+      <span *ngIf="result" style="font-weight:bold;margin-top: 20px">{{result[0]}}</span>
+    </div>
+
     <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" /> -->
   </div>
   <div class="modal-footer">
@@ -142,8 +155,8 @@
 <clr-modal [(clrModalOpen)]="opened1" [clrModalClosable]="true">
   <h3 class="modal-title text-center">Upload File</h3>
   <div class="modal-body text-center">
-    <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)" class="clr-form-control"
-      [(ngModel)]="csvModel" />
+    <input type="file" name="title" id="title" accept="text/csv" (change)="uploadFile($event.target.files)"
+      class="clr-form-control" [(ngModel)]="csvModel" />
   </div>
   <div class="modal-footer">
     <button type="button" [disabled]="!csvFile" class="btn btn-primary" (click)="uploadFileOnServer()">

@@ -20,6 +20,10 @@ app.get('/api/chart2', charts.chart2);
 
 app.get('/api/chart3', charts.chart3);
 
+app.get('/api/chart4', charts.chart4);
+
+app.get('/api/chart5', charts.chart5);
+
 var multipartUpload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, callback) { callback(null, './tmp/csv/'); },

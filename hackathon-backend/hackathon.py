@@ -8,11 +8,9 @@ db = pickle.load(bfile)
 try:
     test_Sent=[sys.argv[1]]
     test_trans=db['vectorizer'].transform(test_Sent)
-    predict = db['classifier'].predict(test_trans)
-    #probability_to_be_positive = db['classifier'].predict_proba(test_trans)[:,1]
-    #print(probability_to_be_positive)
+    probabilityGet = db['model'].predict_proba(test_trans)
     import pandas as pd
-    output = predict.tolist()
+    output = probabilityGet.tolist()
     x = json.dumps(output)
     print(x)
 

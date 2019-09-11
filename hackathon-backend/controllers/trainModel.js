@@ -10,7 +10,7 @@ var trainModel = function (req, res, next) {
                     trained: true,
                     reason: "Trainig Done SuccessFully, Now You can predict tweet sentiments"
                 });
-            }, 5000);
+            }, 7000);
             
         } else {
             return res.send({

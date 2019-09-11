@@ -34,6 +34,8 @@ export class AppComponent implements OnInit {
   chart2: any;
   chart3: any;
   gridData: Array<any>;
+  chart4: string;
+  chart5: string;
 
 
   constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
@@ -172,6 +174,8 @@ export class AppComponent implements OnInit {
     const bs1 = this.twitter.chart1();
     const bs2 = this.twitter.chart2();
     const bs3 = this.twitter.chart3();
+    const bs4 = this.twitter.chart4();
+    const bs5 = this.twitter.chart5();
     this.loading = true;
     forkJoin(bs1).subscribe((resp: any) => {
       this.chart1 = 'data:image/jpeg;base64,' + resp[0].body.data;
@@ -183,6 +187,14 @@ export class AppComponent implements OnInit {
     });
     forkJoin(bs3).subscribe((resp: any) => {
       this.chart3 = 'data:image/jpeg;base64,' + resp[0].body.data;
+      this.loading = false;
+    });
+    forkJoin(bs4).subscribe((resp: any) => {
+      this.chart4 = 'data:image/jpeg;base64,' + resp[0].body.data;
+      this.loading = false;
+    });
+    forkJoin(bs5).subscribe((resp: any) => {
+      this.chart5 = 'data:image/jpeg;base64,' + resp[0].body.data;
       this.loading = false;
     });
   }
