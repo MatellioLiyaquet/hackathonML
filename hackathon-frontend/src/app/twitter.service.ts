@@ -27,7 +27,7 @@ export class TwitterService {
   }
 
   getTweetSentiment(tweet) {
-    return this.http.post(this.API_URL + 'getSentiment', tweet, { observe: 'response' });
+    return this.http.get(`${this.API_URL}getSentiment?tweet=${encodeURI(tweet)}`, { observe: 'response' });
   }
 
   uploadCsv(data) {

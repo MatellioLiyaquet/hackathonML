@@ -10,7 +10,8 @@ const charts = require('./controllers/charts')
 app.use(require('cors')());
 app.use(require('body-parser').json());
 
-app.post('/api/getSentiment', tweetAnalysis.getAnalysis);
+app.get('/api/getSentiment', tweetAnalysis.getAnalysis);
+app.get('/api/getAnalysisByText', tweetAnalysis.getAnalysisByText);
 
 app.get('/api/trainData', trainModel.trainModel)
 

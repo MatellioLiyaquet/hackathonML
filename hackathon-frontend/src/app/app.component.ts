@@ -98,7 +98,7 @@ export class AppComponent implements OnInit {
       tweet: tweet
     }
 
-    this.twitter.getTweetSentiment(req).subscribe((resp: any) => {
+    this.twitter.getTweetSentiment(tweet).subscribe((resp: any) => {
       console.log(resp);
       if (resp.body) {
         this.result = resp.body.result;
