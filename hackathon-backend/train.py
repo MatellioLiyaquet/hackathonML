@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import sys
-import numpy as np
+# import numpy as np
 import re
 import pickle 
 import nltk

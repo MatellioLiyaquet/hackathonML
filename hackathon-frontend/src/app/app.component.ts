@@ -98,30 +98,11 @@ export class AppComponent implements OnInit {
       tweet: tweet
     }
 
-    this.twitter.getTweetSentiment(req).subscribe(resp => {
+    this.twitter.getTweetSentiment(req).subscribe((resp: any) => {
       console.log(resp);
       if (resp.body) {
-        this.result = resp.body[0];
-        this.result[0] = this.result[0] * 100;
-        this.result[1] = this.result[1] * 100;
-
-        console.log(this.result[1] - this.result[0])
-
-
-        if (this.result[0] > this.result[1]) {
-          if ((this.result[0] - this.result[1]) < 15) {
-            this.tweetSentiment = 'NUETRAL';
-          } else {
-            this.tweetSentiment = 'NEGATIVE';
-          }
-        } else if (this.result[0] < this.result[1]) {
-          if ((this.result[1] - this.result[0]) < 15) {
-            this.tweetSentiment = 'NUETRAL';
-          } else {
-            this.tweetSentiment = 'POSITIVE';
-          }
-        }
-
+        this.result = resp.body.result;
+        this.tweetSentiment = resp.body.sentiment;
       } else {
         this.result = "Cannot Analayze"
       }
