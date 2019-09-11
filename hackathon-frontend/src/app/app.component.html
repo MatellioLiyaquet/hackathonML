@@ -136,12 +136,22 @@
   <div class="modal-body text-center clr-row">
     <div class="clr-col-6">
       <img src="../assets//images/Positive.png" *ngIf="result" alt="Positive" style="height: 200px;width: 200px" />
-      <span style="font-weight:bold;margin-top: 20px" *ngIf="result">{{result[1]}}</span>
+
     </div>
     <div class="clr-col-6">
       <img src="../assets//images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
-      <span *ngIf="result" style="font-weight:bold;margin-top: 20px">{{result[0]}}</span>
+
     </div>
+    <div class="clr-col-6" style="margin-top: 4%;font-size: 15px;"> <span style="font-weight:bold;margin-top: 20px"
+        *ngIf="result">{{result[1] | number:'1.2-2'}} %</span>
+    </div>
+    <div class="clr-col-6" style="margin-top: 4%;font-size: 15px;"> <span *ngIf="result"
+        style="font-weight:bold;">{{result[0] | number:'1.2-2'}} %</span>
+    </div>
+    <div class="clr-col-12" style="margin-top: 7%;font-size: 20px;"> <span *ngIf="result"
+      style="font-weight:bold;">Tweet seems to be {{tweetSentiment}}</span>
+  </div>
+
 
     <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" /> -->
   </div>

@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   gridData: Array<any>;
   chart4: string;
   chart5: string;
+  tweetSentiment: string;
 
 
   constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
@@ -101,6 +102,26 @@ export class AppComponent implements OnInit {
       console.log(resp);
       if (resp.body) {
         this.result = resp.body[0];
+        this.result[0] = this.result[0] * 100;
+        this.result[1] = this.result[1] * 100;
+
+        console.log(this.result[1] - this.result[0])
+
+
+        if (this.result[0] > this.result[1]) {
+          if ((this.result[0] - this.result[1]) < 15) {
+            this.tweetSentiment = 'NUETRAL';
+          } else {
+            this.tweetSentiment = 'NEGATIVE';
+          }
+        } else if (this.result[0] < this.result[1]) {
+          if ((this.result[1] - this.result[0]) < 15) {
+            this.tweetSentiment = 'NUETRAL';
+          } else {
+            this.tweetSentiment = 'POSITIVE';
+          }
+        }
+
       } else {
         this.result = "Cannot Analayze"
       }
