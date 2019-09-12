@@ -18,9 +18,9 @@ var upload = function (req, res, next) {
                 return res.send({ error: validationError });
             }
             var spawn = require("child_process").spawn;
-            spawn('python', ["plot1.py"]);
-            spawn('python', ["plot2.py"]);
-            spawn('python', ["plot3.py"]);
+            spawn('python2', ["plot1.py"]);
+            spawn('python2', ["plot2.py"]);
+            spawn('python2', ["plot3.py"]);
             setTimeout(() => {
                 return res.json({ data: fileRows })
             }, 5000);

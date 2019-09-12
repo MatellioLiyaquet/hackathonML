@@ -6,7 +6,7 @@ var getAnalysis = function (req, res) {
         var spawn = require("child_process").spawn;
         console.log(req.query.tweet)
         if (req.query.tweet) {
-            var process = spawn('python', ["./hackathon.py",
+            var process = spawn('python2', ["./hackathon.py",
                 req.query.tweet]);
             process.stdout.on('data', function (data) {
                 data = data.toString();
@@ -52,7 +52,7 @@ var getAnalysisByText = function (req, res) {
         var spawn = require("child_process").spawn;
         console.log(req.query.tweet)
         if (req.query.tweet) {
-            var process = spawn('python', ["./hackathon.py",
+            var process = spawn('python2', ["./hackathon.py",
                 req.query.tweet]);
             process.stdout.on('data', function (data) {
                 data = data.toString();
