@@ -12,6 +12,7 @@ app.use(require('body-parser').json());
 
 app.get('/api/getSentiment', tweetAnalysis.getAnalysis);
 app.get('/api/getAnalysisByText', tweetAnalysis.getAnalysisByText);
+app.post('/api/getAllAnalysis', tweetAnalysis.getAllAnalysis);
 
 app.get('/api/trainData', trainModel.trainModel)
 

@@ -4,8 +4,7 @@ import base64 as base64
 from wordcloud import WordCloud,STOPWORDS
 import matplotlib.pyplot as plt
 
-Tweet= pandas.read_csv("tmp/csv/Tweets.csv", low_memory=False)
-df=Tweet[Tweet['sentiments']==1]
+df= pandas.read_csv("tmp/csv/Tweets_Prediction.csv", low_memory=False)
 words = ','.join(str(v) for v in df['tweets'])
 cleaned_word = " ".join([word for word in words.split()
                             if 'http' not in word

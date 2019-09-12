@@ -30,15 +30,15 @@ var trainModel = function (req, res, next) {
 var trainingAvailable = function (req, res, next) {
     try {
         console.log("test")
-        if (fs.existsSync('./tmp/csv/Tweets.csv')) {
-            const stat = fs.statSync('./tmp/csv/Tweets.csv');
+        if (fs.existsSync('./tmp/csv/Tweets_Prediction.csv')) {
+            const stat = fs.statSync('./tmp/csv/Tweets_Prediction.csv');
             const response = {
                 'Content-Type': 'audio/csv',
                 'Content-Length': stat.size,
                 'name': 'Tweet.csv'
             }
             const fileRows = [];
-            csv.fromPath('./tmp/csv/Tweets.csv')
+            csv.fromPath('./tmp/csv/Tweets_Prediction.csv')
                 .on("data", function (data) {
                     if(fileRows.length < 5000){
                         fileRows.push(data);

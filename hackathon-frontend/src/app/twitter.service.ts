@@ -12,7 +12,7 @@ export interface TwitterResponse {
 export class TwitterService {
 
   // private API_URL = 'http://localhost/api/';
-  private API_URL = 'http://52.91.169.88:3001/api/';
+  private API_URL = 'http://localhost:3001/api/';
   constructor(private http: HttpClient) { }
 
   user() {
@@ -29,6 +29,14 @@ export class TwitterService {
 
   getTweetSentiment(tweet) {
     return this.http.get(`${this.API_URL}getSentiment?tweet=${encodeURI(tweet)}`, { observe: 'response' });
+  }
+
+  getAnalysisByText(tweet) {
+    return this.http.get(`${this.API_URL}getAnalysisByText?tweet=${encodeURI(tweet)}`, { observe: 'response' });
+  }
+
+  getAllAnalysis(tweet) {
+    return this.http.post(`${this.API_URL}getAllAnalysis`, tweet, { observe: 'response' });
   }
 
   uploadCsv(data) {

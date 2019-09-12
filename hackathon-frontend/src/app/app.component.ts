@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
   tweetSentiment: string;
   isDataVisualization: boolean;
   loadingtweets: boolean;
+  allModal: boolean;
 
 
   constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
@@ -177,6 +178,33 @@ export class AppComponent implements OnInit {
       this.loading = false;
     });
     this.isDataVisualization = true;
+  }
+
+  getAllAnalysis() {
+    let arr = [];
+    this.loading = true;
+    this.tweetData.forEach(element => {
+      arr.push(element.tweetText);
+    });
+    
+    let request = {
+      tweets: arr
+    }
+    this.twitter.getAllAnalysis(request).subscribe((resp: any) => {
+      if (resp.body) {
+        this.result = resp.body.result;
+        this.tweetSentiment = resp.body.sentiment;
+      } else {
+        this.result = "Cannot Analayze"
+      }
+      this.loading = false;
+      this.allModal = true;
+    }, err => {
+      console.log(err);
+      this.result = err.error.text;
+      this.loading = false;
+      this.allModal = true;
+    })
   }
 
 }

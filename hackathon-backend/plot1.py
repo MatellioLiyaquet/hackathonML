@@ -2,7 +2,7 @@ import pandas
 import numpy as np
 import base64 as base64
 import matplotlib.pyplot as plt
-Tweet= pandas.read_csv("tmp/csv/Tweets.csv", low_memory=False)
+Tweet= pandas.read_csv("tmp/csv/Tweets_Prediction.csv", low_memory=False)
 
 Mood_count=Tweet['sentiments'].value_counts()
 Index = [1,2]
