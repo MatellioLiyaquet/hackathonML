@@ -639,9 +639,9 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/cgt_jpr_lin_liyakat/Hackathon/hackathon-2019/hackathon-frontend/node_modules/@clr/icons/clr-icons.min.css */"./node_modules/@clr/icons/clr-icons.min.css");
-__webpack_require__(/*! /home/cgt_jpr_lin_liyakat/Hackathon/hackathon-2019/hackathon-frontend/node_modules/@clr/ui/clr-ui.min.css */"./node_modules/@clr/ui/clr-ui.min.css");
-module.exports = __webpack_require__(/*! /home/cgt_jpr_lin_liyakat/Hackathon/hackathon-2019/hackathon-frontend/src/styles.css */"./src/styles.css");
+__webpack_require__(/*! /mnt/my-mount/hackathon-2019/hackathonML/hackathon-frontend/node_modules/@clr/icons/clr-icons.min.css */"./node_modules/@clr/icons/clr-icons.min.css");
+__webpack_require__(/*! /mnt/my-mount/hackathon-2019/hackathonML/hackathon-frontend/node_modules/@clr/ui/clr-ui.min.css */"./node_modules/@clr/ui/clr-ui.min.css");
+module.exports = __webpack_require__(/*! /mnt/my-mount/hackathon-2019/hackathonML/hackathon-frontend/src/styles.css */"./src/styles.css");
 
 
 /***/ })
