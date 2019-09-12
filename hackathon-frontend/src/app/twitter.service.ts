@@ -11,7 +11,8 @@ export interface TwitterResponse {
 @Injectable()
 export class TwitterService {
 
-  private API_URL = 'http://localhost:3001/api/';
+  // private API_URL = 'http://localhost/api/';
+  private API_URL = 'http://52.91.169.88:3001/api/';
   constructor(private http: HttpClient) { }
 
   user() {
