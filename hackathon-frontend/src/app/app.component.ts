@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
     this.gridData = [];
     db.list('tweets').valueChanges().subscribe(resp => {
       this.tweetData = resp;
+      this.tweetData = this.tweetData.reverse();
       console.log(this.tweetData)
     });
   }

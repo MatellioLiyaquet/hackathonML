@@ -5,7 +5,7 @@
   <clr-header class="header-4">
     <div class="branding">
       <a class="nav-link">
-        <div class="title">Hackathon-Wonders-2019</div>
+        <div class="title">Hackathon Techno Wonders 2019</div>
       </a>
     </div>
     <div class="header-actions">
@@ -82,7 +82,7 @@
             </div>
 
             <div class="card-block text-center" *ngIf="!isDataAvailable && gridData.length === 0 && !loadingtweets">
-              <p>No Data Found</p>
+              <p>No Dataset Found</p>
             </div>
             <div class="card-block text-center" *ngIf="loadingtweets">
                 <h4>Checking If Any Dataset Available...</h4>
@@ -92,7 +92,7 @@
               <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable && !isDataVisualization && !loadingtweets">Visualize Data</button>
               <button class="btn btn-sm" *ngIf="!isDataAvailable && !loadingtweets"
                 (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
-                New Data</button>
+                 Dataset</button>
             </div>
 
           </div>
@@ -127,10 +127,10 @@
       <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
 
     </div>
-    <div class="clr-col-6" style="margin-top: 4%;font-size: 15px;"> <span style="font-weight:bold;margin-top: 20px"
+    <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span style="font-weight:bold;margin-top: 20px;"
         *ngIf="result">{{result[1] | number:'1.2-2'}} %</span>
     </div>
-    <div class="clr-col-6" style="margin-top: 4%;font-size: 15px;"> <span *ngIf="result"
+    <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span *ngIf="result"
         style="font-weight:bold;">{{result[0] | number:'1.2-2'}} %</span>
     </div>
     <div class="clr-col-12" style="margin-top: 7%;font-size: 20px;"> <span *ngIf="result"
