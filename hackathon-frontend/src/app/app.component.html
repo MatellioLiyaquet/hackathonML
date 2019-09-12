@@ -9,36 +9,14 @@
       </a>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" *ngIf="isDataAvailable"
-        (click)="submitTweet=false;fetchTweet=false;tweet=null;">Data Information</button>
-      <button class="btn btn-primary" *ngIf="isDataAvailable"
-        (click)="submitTweet=false;fetchTweet=true;tweet=null;">Fetch Tweets</button>
-      <!-- <button class="btn btn-primary" *ngIf="isDataAvailable"
-        (click)="submitTweet=true;fetchTweet=false;tweet=null;">Submit Tweet</button> -->
+      <button class="btn btn-primary" *ngIf="isDataAvailable" (click)="fetchTweet=false;tweet=null;">Data
+        Information</button>
+      <button class="btn btn-primary" *ngIf="isDataAvailable" (click)="fetchTweet=true;tweet=null;">Fetch
+        Tweets</button>
     </div>
   </clr-header>
   <div class="content-container">
     <main class="content-area">
-
-
-
-      <div class="clr-row clr-col-12" *ngIf="submitTweet">
-        <div class="clr-col-12">
-          <div class="card">
-            <div class="card-header">
-              Submit Tweet
-            </div>
-            <div class="card-block">
-              <div class="card-text">
-                <textarea class="clr-col-12" [(ngModel)]="tweet" #ctrl="ngModel" required></textarea>
-              </div>
-            </div>
-            <div class="card-footer text-center">
-              <button class="btn btn-sm" [disabled]="!tweet" (click)="addTweet(tweet)">Submit Tweet</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="clr-row clr-col-12" *ngIf="fetchTweet">
         <div class=" clr-col-12">
@@ -51,13 +29,13 @@
                 <table class="table" *ngIf="tweetData">
                   <thead>
                     <tr>
-                      <th>Tweets</th>
+                      <th style="width: 70%">Tweets</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let body of tweetData">
-                      <td>{{body.tweetText}}</td>
+                      <td class="font-20">{{body.tweetText}}</td>
                       <td> <button class="btn btn-sm" (click)="setValue(body.tweetText);selectedText=body.tweetText">Get
                           Sentiment</button></td>
                     </tr>
@@ -73,15 +51,14 @@
         </div>
       </div>
 
-      <div class="clr-row clr-col-12" *ngIf="!fetchTweet && !submitTweet">
+      <div class="clr-row clr-col-12" *ngIf="!fetchTweet">
         <div class=" clr-col-12">
           <div class="card">
             <div class="card-header">
-              Data Information
+              Dataset Information
             </div>
-
-            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0"
-              style="height: 400px;overflow-y: auto">
+            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0 && !loadingtweets"
+              style="height: 600px;overflow-y: auto">
               <table class="table" *ngIf="gridData">
                 <thead>
                   <tr>
@@ -96,33 +73,41 @@
                         style="height: 40px;width: 40px" />
                       <img src="../assets//images/Negetive.png" alt="Negtive" *ngIf="body.sentiment==='1'"
                         style="height: 40px;width: 40px" />
-                      <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="body.sentiment==='1'" style="height: 40px;width: 40px" /> -->
                     </td>
-                    <td>{{body.tweet}}</td>
+                    <td class="font-20">{{body.tweet}}</td>
                   </tr>
 
                 </tbody>
               </table>
             </div>
-            <div class="card-block text-center" *ngIf="isDataAvailable && gridData.length > 0">
-              <img src="{{chart4}}" class="clr-col-6" />
-              <img src="{{chart5}}" class="clr-col-6" />
-              <img src="{{chart1}}" class="clr-col-6" />
-              <img src="{{chart3}}" class="clr-col-6" />
-              <img src="{{chart2}}" class="clr-col-12" />
 
-            </div>
-            <div class="card-block text-center" *ngIf="!isDataAvailable">
+            <div class="card-block text-center" *ngIf="!isDataAvailable && gridData.length === 0 && !loadingtweets">
               <p>No Data Found</p>
             </div>
+            <div class="card-block text-center" *ngIf="loadingtweets">
+                <h4>Checking If Any Dataset Available...</h4>
+              </div>
             <div class="card-footer text-center">
-              <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable">Train Model</button>
-              <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable">Visualize Data</button>
-              <button class="btn btn-sm" *ngIf="!isDataAvailable"
+              <button class="btn btn-sm" (click)="trainModel()" *ngIf="isDataAvailable && !loadingtweets">Train Model</button>
+              <button class="btn btn-sm" (click)="visualize()" *ngIf="isDataAvailable && !isDataVisualization && !loadingtweets">Visualize Data</button>
+              <button class="btn btn-sm" *ngIf="!isDataAvailable && !loadingtweets"
                 (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
                 New Data</button>
             </div>
 
+          </div>
+          <div class="card" *ngIf="isDataAvailable && gridData.length > 0 && isDataVisualization">
+            <div class="card-header">
+              Data Visualization
+            </div>
+            <div class="card-block text-center">
+              <img src="{{chart4}}" class="clr-col-6 border2px" />
+              <img src="{{chart5}}" class="clr-col-6 border2px" />
+              <img src="{{chart1}}" class="clr-col-6 border2px" />
+              <img src="{{chart3}}" class="clr-col-6 border2px" />
+              <img src="{{chart2}}" class="clr-col-12 border2px" />
+
+            </div>
           </div>
         </div>
       </div>
@@ -149,8 +134,8 @@
         style="font-weight:bold;">{{result[0] | number:'1.2-2'}} %</span>
     </div>
     <div class="clr-col-12" style="margin-top: 7%;font-size: 20px;"> <span *ngIf="result"
-      style="font-weight:bold;">Tweet seems to be {{tweetSentiment}}</span>
-  </div>
+        style="font-weight:bold;">Tweet seems to be {{tweetSentiment}}</span>
+    </div>
 
 
     <!-- <img src="../assets//images/Neutral.png" alt="Nuetral" *ngIf="result===3" style="height: 200px;width: 200px" /> -->

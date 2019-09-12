@@ -1,2 +1,10 @@
-@import "~ng-snotify/styles/material.css"
+@import "~ng-snotify/styles/material.css";
 /* You can add global styles to this file, and also import other style files */
+
+.border2px{
+    border: 2px solid black;
+}
+
+.font-20{
+    font-size: 17px !important;
+}

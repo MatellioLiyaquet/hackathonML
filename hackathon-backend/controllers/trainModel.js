@@ -40,7 +40,7 @@ var trainingAvailable = function (req, res, next) {
             const fileRows = [];
             csv.fromPath('./tmp/csv/Tweets.csv')
                 .on("data", function (data) {
-                    if(fileRows.length < 3000){
+                    if(fileRows.length < 5000){
                         fileRows.push(data);
                     }
                 })

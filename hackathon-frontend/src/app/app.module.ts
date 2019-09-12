@@ -6,9 +6,6 @@ import { ClarityModule } from '@clr/angular';
 import { MomentModule } from 'angular2-moment';
 
 import { AppComponent } from './app.component';
-import { TweetComponent } from './tweet/tweet.component';
-import { TweetsComponent } from './tweets/tweets.component';
-import { TweetPipe } from './tweet.pipe';
 import { FormsModule } from '@angular/forms';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { environment } from 'src/environments/environment.prod';
@@ -21,9 +18,6 @@ export const firebaseConfig = environment.firebaseConfig;
 @NgModule({
   declarations: [
     AppComponent,
-    TweetComponent,
-    TweetsComponent,
-    TweetPipe,
   ],
   imports: [
     BrowserModule,

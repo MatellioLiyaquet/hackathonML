@@ -19,13 +19,11 @@ export class AppComponent implements OnInit {
   csvModel: any;
   csvData: any;
   loading: boolean;
-  submitTweet: boolean;
   fetchTweet: boolean;
   tweetData: any;
   opened: boolean;
   selectedText: string;
   opened1: boolean;
-  incrementIndex: number;
   isDataAvailable: any;
   modelTrained: any;
   modelTrainedReason: any;
@@ -37,12 +35,13 @@ export class AppComponent implements OnInit {
   chart4: string;
   chart5: string;
   tweetSentiment: string;
+  isDataVisualization: boolean;
+  loadingtweets: boolean;
 
 
   constructor(private twitter: TwitterService, private snotifyService: SnotifyService, db: AngularFireDatabase) {
     this.tweetData = [];
     this.opened = false;
-    this.incrementIndex = 1;
     this.gridData = [];
     db.list('tweets').valueChanges().subscribe(resp => {
       this.tweetData = resp;
@@ -51,31 +50,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.twitter.user().subscribe(user => this.user = user.data);
     this.getFileData();
   }
 
   getFileData() {
     this.loading = true;
+    this.loadingtweets = true;
     this.twitter.isDataAvailable().subscribe(resp => {
       if (resp.body) {
-
         this.isDataAvailable = resp.body.isAvailable;
         if (this.isDataAvailable) {
           resp.body.data.forEach((element, index) => {
             if (index !== 0) {
               let sentiment = '';
-              switch (element[0]) {
-                case '5':
-                  sentiment = 'POSITIVE'
-                  break;
-                case '1':
-                  sentiment = 'NEUTRAL'
-                  break;
-                case '3':
-                  sentiment = 'NEGATIVE'
-                  break;
-              }
               this.gridData.push({
                 sentiment: element[0],
                 tweet: element[1],
@@ -84,9 +71,12 @@ export class AppComponent implements OnInit {
             }
           });
           this.loading = false;
+          this.loadingtweets = false;
+          this.snotifyService.info("Dataset Available, Showing TOP 5000 Records");
         } else {
-          this.snotifyService.info("Ready to Upload Data, Please Upload a Valid CSV");
+          this.snotifyService.info("No Dataset Available, Please Upload a Valid CSV");
           this.loading = false;
+          this.loadingtweets = false;
         }
       }
     })
@@ -99,14 +89,12 @@ export class AppComponent implements OnInit {
     }
 
     this.twitter.getTweetSentiment(tweet).subscribe((resp: any) => {
-      console.log(resp);
       if (resp.body) {
         this.result = resp.body.result;
         this.tweetSentiment = resp.body.sentiment;
       } else {
         this.result = "Cannot Analayze"
       }
-
       this.loading = false;
       this.opened = true;
     }, err => {
@@ -148,18 +136,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  addTweet(tweet) {
-    const req = {
-      tweetId: this.incrementIndex++,
-      tweetText: tweet,
-      tweetSentiment: ''
-    };
-    this.tweet = null;
-    this.twitter.addTweet(req).subscribe(resp => {
-      this.snotifyService.info('Tweet Added Successfully');
-    })
-  }
-
   trainModel() {
     this.loading = true;
     this.twitter.trainModel().subscribe(resp => {
@@ -167,7 +143,7 @@ export class AppComponent implements OnInit {
         this.modelTrained = resp.body.trained;
         this.modelTrainedReason = resp.body.reason;
         this.loading = false;
-        this.snotifyService.success('Training Done');
+        this.snotifyService.success('Model Training Done From Given Dataset');
       }
     })
   }
@@ -199,6 +175,7 @@ export class AppComponent implements OnInit {
       this.chart5 = 'data:image/jpeg;base64,' + resp[0].body.data;
       this.loading = false;
     });
+    this.isDataVisualization = true;
   }
 
 }
