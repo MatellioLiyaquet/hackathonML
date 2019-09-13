@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:3000/api',
+  api: 'http://localhost:3001/api',
   firebaseConfig: {
     apiKey: "AIzaSyA2GdeRkGbLaWsfTzbqeuAca0FIe34LbHE",
     authDomain: "react-my-burger-9833c.firebaseapp.com",

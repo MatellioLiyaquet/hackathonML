@@ -193,7 +193,7 @@ export class AppComponent implements OnInit {
     }
     this.twitter.getAllAnalysis(request).subscribe((resp: any) => {
       if (resp.body) {
-        this.result = resp.body.result;
+        this.result = resp.body;
         this.tweetSentiment = resp.body.sentiment;
       } else {
         this.result = "Cannot Analayze"

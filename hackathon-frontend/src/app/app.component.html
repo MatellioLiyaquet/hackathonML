@@ -91,9 +91,6 @@
             <div class="card-footer text-center">
               <button class="btn btn-sm" (click)="visualize()"
                 *ngIf="isDataAvailable && !isDataVisualization && !loadingtweets">Visualize Data</button>
-              <button class="btn btn-sm" *ngIf="!isDataAvailable && !loadingtweets"
-                (click)="submitTweet=false;fetchTweet=false;tweet=null;opened1=true;">Upload
-                Dataset</button>
             </div>
 
           </div>

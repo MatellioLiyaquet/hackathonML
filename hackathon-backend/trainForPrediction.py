@@ -43,7 +43,7 @@ X = transformer.fit_transform(X).toarray()
 
 
 from sklearn.model_selection import train_test_split
-text_train, text_test, sent_train, sent_test = train_test_split(X, y, test_size = 0.30)
+text_train, text_test, sent_train, sent_test = train_test_split(X, y, shuffle = True)
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier

@@ -12,7 +12,7 @@ export interface TwitterResponse {
 export class TwitterService {
 
   // private API_URL = 'http://localhost/api/';
-  private API_URL = 'http://localhost:3001/api/';
+  private API_URL = environment.api + '/'
   constructor(private http: HttpClient) { }
 
   user() {

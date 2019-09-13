@@ -72,35 +72,42 @@ var getAllAnalysis = function (req, res) {
     console.log(req.body.tweets)
     if (req.body.tweets) {
         try {
-            req.body.tweets.forEach(tweet => {
+
+            for (let index = 0; index < req.body.tweets.length; index++) {
                 var spawn = require("child_process").spawn
                 var process = spawn('python2', ["./getRelevany.py",
-                    tweet]);
+                    req.body.tweets[index]]);
                 process.stdout.on('data', function (data) {
                     data = data.toString();
                     let response = JSON.parse(data);
                     result[0] = response[0][0] * 100;
                     result[1] = response[0][1] * 100;
+                    console.log(result)
                     let tweetSentiment;
                     if (result[0] > result[1]) {
-                        releventTweets.push(tweet);
+                        releventTweets.push(req.body.tweets[index]);
                     }
-                });
-            });
-            console.log(releventTweets)
-            req.body.tweets.forEach(tweet => {
-                var spawn = require("child_process").spawn;
-                var process2 = spawn('python2', ["./getPrediction.py",
-                    releventTweets]);
-                process2.stdout.on('data', function (data) {
-                    let response = JSON.parse(data);
-                    result[0] = response[0][0] * 100;
-                    result[1] = response[0][1] * 100;
-                    let tweetPrediction;
-                    return res.send(result);
-                });
+                })
+            }
 
-            })
+            setTimeout(() => {
+                if (releventTweets.length > 0) {
+                    console.log(releventTweets)
+                    var spawn = require("child_process").spawn;
+                    var process2 = spawn('python2', ["./getPrediction.py",
+                        releventTweets]);
+                    process2.stdout.on('data', function (data) {
+                        let response = JSON.parse(data);
+                        result[0] = response[0][0] * 100;
+                        result[1] = response[0][1] * 100;
+                        let tweetPrediction;
+                        return res.send(result);
+                    });
+                }
+            }, req.body.tweets.length * 3);
+           
+
+
         } catch (error) {
             console.log(error)
         }
