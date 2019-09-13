@@ -10,11 +10,13 @@ nltk.download('stopwords')
 import pandas
 import json
 
-
+# reading data from csv file
 reviews = pandas.read_csv('tmp/csv/Tweets_Prediction.csv')
 
+# Retrieving dependent and independent variables
 X,y = reviews.tweets,reviews.sentiments
 
+# Creating Corpus and Cleaning up dataset
 corpus = []
 for i in range(0, len(X)):
     review = re.sub(r'\W', ' ', str(X[i]))
@@ -28,20 +30,24 @@ for i in range(0, len(X)):
     corpus.append(review)  
     
 
- 
+db = {} 
 
+
+# Converting text into numeric values and removing stopwords using NLTK library
 from sklearn.feature_extraction.text import CountVectorizer
 vectorizer = CountVectorizer(max_features = len(corpus), min_df = 3, max_df = 0.6, stop_words = stopwords.words('english'))
 X = vectorizer.fit_transform(corpus).toarray()
+db['vectorizer'] = vectorizer
 
 
+# Converting text into numeric values
 from sklearn.feature_extraction.text import TfidfTransformer
 transformer = TfidfTransformer()
 X = transformer.fit_transform(X).toarray()
 
-
+# Spliting into training and test datasets
 from sklearn.model_selection import train_test_split
-text_train, text_test, sent_train, sent_test = train_test_split(X, y, train_size=0.30, shuffle=True, random_state=42)
+text_train, text_test, sent_train, sent_test = train_test_split(X, y, train_size=0.30, random_state=101)
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -49,31 +55,28 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 
-
-Classifiers = [
-    LogisticRegression(),
-    # KNeighborsClassifier(3),
-    # SVC(kernel="rbf", C=0.025, probability=True),
- ]
+# Classification Logistic Regression Model
 
 Accuracy=[]
-Model=[]
-for classifier in Classifiers:
-    try:
-        fit = classifier.fit(X,y)
-        pred = fit.predict(text_test)
-        # Use score method to get accuracy of model
-        score = classifier.score(text_test, sent_test)
-        from sklearn.metrics import classification_report
-        report = classification_report(sent_test,pred)
-        print(report)
-       
-    except Exception:
-        print( " Exception occures")
-    accuracy = accuracy_score(sent_test,pred)*100
-    Accuracy.append(accuracy)
-    Model.append(classifier.__class__.__name__)
-    print('Accuracy of '+classifier.__class__.__name__+'is '+str(accuracy))
 
+try:
+    classifier = LogisticRegression()
+    Model = classifier.fit(text_train,sent_train)
+    pred = Model.predict(text_test)
+    # Use score method to get accuracy of model
+    score = classifier.score(text_test, sent_test)
+    from sklearn.metrics import classification_report
+    report = classification_report(sent_test,pred)
+    print(report)
+    db['model'] = Model
+except Exception:
+    print( " Exception occures")
+accuracy = accuracy_score(sent_test,pred)*100
+Accuracy.append(accuracy)
+print('Accuracy of '+classifier.__class__.__name__+'is '+str(accuracy))
 
+# Writing Pickle File
+dbfile = open('picklePrediiction', 'ab')
+pickle.dump(db, dbfile)                      
+dbfile.close()
 

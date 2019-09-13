@@ -4,6 +4,7 @@ import base64 as base64
 import matplotlib.pyplot as plt
 Tweet= pandas.read_csv("tmp/csv/Tweets_Prediction.csv", low_memory=False)
 
+# Ploting Bar Charts
 Mood_count=Tweet['sentiments'].value_counts()
 Index = [1,2]
 plt.bar(Index,Mood_count, color=['green', 'red'])

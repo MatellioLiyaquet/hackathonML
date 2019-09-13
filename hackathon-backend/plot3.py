@@ -3,8 +3,9 @@ import numpy as np
 import base64 as base64
 import matplotlib.pyplot as plt
 Tweet= pandas.read_csv("tmp/csv/Tweets_Prediction.csv", low_memory=False)
-
 import matplotlib.pyplot as plt
+
+# Ploting PIE Charts
 Mood_count=Tweet['sentiments'].value_counts()
 labels = 'positive','negative'
 sizes = Mood_count
