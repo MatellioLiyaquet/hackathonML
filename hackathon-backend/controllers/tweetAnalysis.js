@@ -68,24 +68,39 @@ var getAnalysis = function (req, res) {
 
 var getAllAnalysis = function (req, res) {
     let result = [];
+    let releventTweets = [];
+    console.log(req.body.tweets)
     if (req.body.tweets) {
         try {
-            var spawn = require("child_process").spawn
-            var process = spawn('python2', ["./getPrediction.py",
-                req.body.tweets]);
+            req.body.tweets.forEach(tweet => {
+                var spawn = require("child_process").spawn
+                var process = spawn('python2', ["./getRelevany.py",
+                    tweet]);
                 process.stdout.on('data', function (data) {
-                data = data.toString();
-                console.log(data)
-                let response = JSON.parse(data);
-                result[0] = response[0][0] * 100;
-                result[1] = response[0][1] * 100;
-                let finalResponse = {
-                    result: result,
-                    sentiment: null
-                }
-
-                return res.send(finalResponse);
+                    data = data.toString();
+                    let response = JSON.parse(data);
+                    result[0] = response[0][0] * 100;
+                    result[1] = response[0][1] * 100;
+                    let tweetSentiment;
+                    if (result[0] > result[1]) {
+                        releventTweets.push(tweet);
+                    }
+                });
             });
+            console.log(releventTweets)
+            req.body.tweets.forEach(tweet => {
+                var spawn = require("child_process").spawn;
+                var process2 = spawn('python2', ["./getPrediction.py",
+                    releventTweets]);
+                process2.stdout.on('data', function (data) {
+                    let response = JSON.parse(data);
+                    result[0] = response[0][0] * 100;
+                    result[1] = response[0][1] * 100;
+                    let tweetPrediction;
+                    return res.send(result);
+                });
+
+            })
         } catch (error) {
             console.log(error)
         }
