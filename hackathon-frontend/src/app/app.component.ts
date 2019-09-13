@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
           });
           this.loading = false;
           this.loadingtweets = false;
-          this.snotifyService.info("Dataset Available, Showing TOP 5000 Records");
+          this.snotifyService.info("Dataset Available, Showing TOP Records");
         } else {
           this.snotifyService.info("No Dataset Available, Please Upload a Valid CSV");
           this.loading = false;
@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
     }
 
     this.twitter.getTweetSentiment(tweet).subscribe((resp: any) => {
+      this.result = [];
       if (resp.body) {
         this.result = resp.body.result;
         this.tweetSentiment = resp.body.sentiment;

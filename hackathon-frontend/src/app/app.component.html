@@ -122,12 +122,13 @@
   <div class="modal-body text-center clr-row">
     <div class="clr-col-6" *ngIf="result && tweetSentiment !== 'IRRELEVANT'">
       <img src="./assets/images/Positive.png" *ngIf="result" alt="Positive" style="height: 200px;width: 200px" />
-
     </div>
     <div class="clr-col-6" *ngIf="result && tweetSentiment !== 'IRRELEVANT'">
       <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
-
     </div>
+    <div class="clr-col-12" *ngIf="result && tweetSentiment === 'IRRELEVANT'">
+        <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
+      </div>
     <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span style="font-weight:bold;margin-top: 20px;"
         *ngIf="result && tweetSentiment !== 'IRRELEVANT'">{{result[1] | number:'1.2-2'}} %</span>
     </div>
@@ -170,7 +171,6 @@
     </div>
     <div class="clr-col-6">
       <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
-
     </div>
     <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span style="font-weight:bold;margin-top: 20px;"
         *ngIf="result">{{result[1] | number:'1.2-2'}} %</span>
