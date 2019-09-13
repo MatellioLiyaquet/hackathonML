@@ -9,6 +9,7 @@ var getAnalysis = function (req, res) {
                 req.query.tweet]);
             process.stdout.on('data', function (data) {
                 data = data.toString();
+                console.log(data)
                 let response = JSON.parse(data);
                 result[0] = response[0][0] * 100;
                 result[1] = response[0][1] * 100;
@@ -24,19 +25,18 @@ var getAnalysis = function (req, res) {
                         req.query.tweet]);
                     process2.stdout.on('data', function (data) {
                         data = data.toString();
-                        console.log(data)
                         let response = JSON.parse(data);
                         result[0] = response[0][0] * 100;
                         result[1] = response[0][1] * 100;
                         let tweetSentiment;
                         if (result[0] > result[1]) {
-                            if ((result[0] - result[1]) < 15) {
+                            if ((result[0] - result[1]) < 5) {
                                 tweetSentiment = 'NUETRAL';
                             } else {
                                 tweetSentiment = 'NEGATIVE';
                             }
                         } else if (result[0] < result[1]) {
-                            if ((result[1] - result[0]) < 15) {
+                            if ((result[1] - result[0]) < 5) {
                                 tweetSentiment = 'NUETRAL';
                             } else {
                                 tweetSentiment = 'POSITIVE';
@@ -69,47 +69,42 @@ var getAnalysis = function (req, res) {
 var getAllAnalysis = function (req, res) {
     let result = [];
     let releventTweets = [];
-    console.log(req.body.tweets)
     if (req.body.tweets) {
         try {
-
-            for (let index = 0; index < req.body.tweets.length; index++) {
+            let count = 0;
+            req.body.tweets.forEach(tweet => {
                 var spawn = require("child_process").spawn
                 var process = spawn('python2', ["./getRelevany.py",
-                    req.body.tweets[index]]);
+                    tweet]);
                 process.stdout.on('data', function (data) {
                     data = data.toString();
                     let response = JSON.parse(data);
                     result[0] = response[0][0] * 100;
                     result[1] = response[0][1] * 100;
-                    console.log(result)
-                    let tweetSentiment;
-                    if (result[0] > result[1]) {
-                        releventTweets.push(req.body.tweets[index]);
+                    if (result[0] < result[1]) {
+                        releventTweets.push(tweet);
                     }
-                })
-            }
+                });
 
-            setTimeout(() => {
-                if (releventTweets.length > 0) {
-                    console.log(releventTweets)
-                    var spawn = require("child_process").spawn;
-                    var process2 = spawn('python2', ["./getPrediction.py",
-                        releventTweets]);
-                    process2.stdout.on('data', function (data) {
-                        let response = JSON.parse(data);
-                        result[0] = response[0][0] * 100;
-                        result[1] = response[0][1] * 100;
-                        let tweetPrediction;
-                        return res.send(result);
-                    });
-                }
-            }, req.body.tweets.length * 3);
-           
-
+                process.stdout.on('close', function (data) {
+                    count++;
+                    if (req.body.tweets.length === count && releventTweets.length > 0) {
+                        console.log(releventTweets)
+                        var spawn = require("child_process").spawn;
+                        var process2 = spawn('python2', ["./getPrediction.py",
+                            releventTweets]);
+                        process2.stdout.on('data', function (data) {
+                            let response = JSON.parse(data);
+                            result[0] = response[0][0] * 100;
+                            result[1] = response[0][1] * 100;
+                            return res.send(result);
+                        });
+                    }
+                });
+            });
 
         } catch (error) {
-            console.log(error)
+            return res.send(error);
         }
     }
 }

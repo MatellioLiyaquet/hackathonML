@@ -23,7 +23,8 @@
           <div class="card">
             <div class="card-header">
               Tweets
-              <button class="btn btn-primary" style="float: right;" *ngIf="tweetData && tweetData.length > 0" (click)="getAllAnalysis()">Get Overall Tweets Sentiments</button>
+              <button class="btn btn-primary" style="float: right;" *ngIf="tweetData && tweetData.length > 0"
+                (click)="getAllAnalysis()">Get Overall Tweets Sentiments</button>
             </div>
             <div class="card-block">
               <div class="card-text">
@@ -89,6 +90,8 @@
               <h4>Checking If Any Dataset Available...</h4>
             </div>
             <div class="card-footer text-center">
+              <!-- <button class="btn btn-sm" (click)="trainModel()"
+                *ngIf="isDataAvailable && !isDataVisualization && !loadingtweets">Train Model</button> -->
               <button class="btn btn-sm" (click)="visualize()"
                 *ngIf="isDataAvailable && !isDataVisualization && !loadingtweets">Visualize Data</button>
             </div>
@@ -124,13 +127,14 @@
       <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
     </div>
     <div class="clr-col-12" *ngIf="result && tweetSentiment === 'IRRELEVANT'">
-        <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
-      </div>
+      <img src="./assets/images/Negetive.png" *ngIf="result" alt="Negtive" style="height: 200px;width: 200px" />
+    </div>
     <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span style="font-weight:bold;margin-top: 20px;"
         *ngIf="result && tweetSentiment !== 'IRRELEVANT'">{{result[1] | number:'1.2-2'}} %</span>
     </div>
-    <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span *ngIf="result && tweetSentiment !== 'IRRELEVANT'"
-        style="font-weight:bold;">{{result[0] | number:'1.2-2'}} %</span>
+    <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span
+        *ngIf="result && tweetSentiment !== 'IRRELEVANT'" style="font-weight:bold;">{{result[0] | number:'1.2-2'}}
+        %</span>
     </div>
     <div class="clr-col-12" style="margin-top: 7%;font-size: 20px;"> <span *ngIf="result && tweetSentiment"
         style="font-weight:bold;">Tweet seems to be {{tweetSentiment}}</span>
@@ -175,7 +179,7 @@
     <div class="clr-col-6" style="margin-top: 4%;font-size: 20px;"> <span *ngIf="result"
         style="font-weight:bold;">{{result[0] | number:'1.2-2'}} %</span>
     </div>
-  
+
 
   </div>
   <div class="modal-footer">

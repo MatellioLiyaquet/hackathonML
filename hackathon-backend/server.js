@@ -1,6 +1,5 @@
 const express = require('express');
 const multer = require('multer');
-
 const app = express();
 const tweetAnalysis = require('./controllers/tweetAnalysis')
 const trainModel = require('./controllers/trainModel')

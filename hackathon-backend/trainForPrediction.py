@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import sys
-# import numpy as np
 import re
 import pickle 
 import nltk
@@ -43,16 +41,11 @@ X = transformer.fit_transform(X).toarray()
 
 
 from sklearn.model_selection import train_test_split
-text_train, text_test, sent_train, sent_test = train_test_split(X, y, shuffle = True)
+text_train, text_test, sent_train, sent_test = train_test_split(X, y, shuffle=True, random_state=42)
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.svm import SVC, LinearSVC, NuSVC
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
-from sklearn.naive_bayes import BernoulliNB
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 
@@ -61,11 +54,6 @@ Classifiers = [
     LogisticRegression(),
     # KNeighborsClassifier(3),
     # SVC(kernel="rbf", C=0.025, probability=True),
-    # DecisionTreeClassifier(),
-    # RandomForestClassifier(n_estimators=200),
-    # AdaBoostClassifier(),
-    # GaussianNB()
-    # BernoulliNB()
  ]
 
 Accuracy=[]

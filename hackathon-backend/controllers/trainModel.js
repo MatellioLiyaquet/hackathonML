@@ -2,20 +2,21 @@ const fs = require('fs');
 const csv = require('fast-csv');
 var trainModel = function (req, res, next) {
     try {
-        if (fs.existsSync('./tmp/csv/Tweets.csv')) {
+        if (!fs.existsSync('./picklePrediction')) {
             var spawn = require("child_process").spawn;
-            spawn('python2', ["./train.py"]);
+            spawn('python2', ["./trainForPrediction.py"]);
+            spawn('python2', ["./trainForRelevancy.py"]);
             setTimeout(() => {
                 return res.send({
                     trained: true,
                     reason: "Trainig Done SuccessFully, Now You can predict tweet sentiments"
                 });
-            }, 7000);
+            }, 10000);
             
         } else {
             return res.send({
                 trained: false,
-                reason: "No Training File Found"
+                reason: "Model Already Exists"
             });
         }
     } catch (error) {

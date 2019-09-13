@@ -146,7 +146,13 @@ export class AppComponent implements OnInit {
         this.modelTrained = resp.body.trained;
         this.modelTrainedReason = resp.body.reason;
         this.loading = false;
-        this.snotifyService.success('Model Training Done From Given Dataset');
+        if (this.modelTrained) {
+          this.snotifyService.success(this.modelTrainedReason);
+
+        } else {
+          this.snotifyService.error(this.modelTrainedReason);
+
+        }
       }
     })
   }
@@ -187,7 +193,7 @@ export class AppComponent implements OnInit {
     this.tweetData.forEach(element => {
       arr.push(element.tweetText);
     });
-    
+
     let request = {
       tweets: arr
     }
